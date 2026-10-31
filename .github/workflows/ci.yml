@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26.12.1'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:pack
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.3'
+      - run: python -m venv .venv
+      - run: .venv/bin/python -m pip install -r sidecar/requirements.lock
+      - run: ../.venv/bin/python -m pytest -q
+        working-directory: sidecar

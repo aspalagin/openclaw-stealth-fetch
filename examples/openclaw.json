@@ -1,0 +1,24 @@
+{
+  "plugins": {
+    "entries": {
+      "openclaw-stealth-fetch": {
+        "enabled": true,
+        "config": {
+          "sidecar": {
+            "baseUrl": "http://127.0.0.1:18801",
+            "timeoutSeconds": 90
+          },
+          "defaultEgress": "auto",
+          "firecrawlFallback": false
+        }
+      }
+    }
+  },
+  "tools": {
+    "web": {
+      "fetch": {
+        "provider": "stealth"
+      }
+    }
+  }
+}

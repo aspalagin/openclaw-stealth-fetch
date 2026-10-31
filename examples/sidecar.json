@@ -1,0 +1,22 @@
+{
+  "listen": {
+    "host": "127.0.0.1",
+    "port": 18801
+  },
+  "state_dir": "/var/lib/stealth-fetch",
+  "egress": {
+    "ru": {
+      "proxy": null,
+      "browser_proxy": null
+    }
+  },
+  "browser": {
+    "chromium_sandbox": true,
+    "chrome_executable": "/usr/bin/google-chrome",
+    "xvfb": "/usr/bin/Xvfb",
+    "enabled": false
+  },
+  "jina": {
+    "enabled": false
+  }
+}

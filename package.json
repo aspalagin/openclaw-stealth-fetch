@@ -1,0 +1,106 @@
+{
+  "name": "@aspalagin/openclaw-stealth-fetch",
+  "version": "0.1.2",
+  "description": "OpenClaw web_fetch provider and fetch_stealth tool with a local HTTP/browser cascade and optional external reader fallbacks.",
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "web-fetch",
+    "stealth",
+    "anti-bot",
+    "camoufox",
+    "patchright"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.16.0 <25 || >=26.1.0"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/index.js",
+    "dist/src/challenge.js",
+    "dist/src/config.js",
+    "dist/src/diagnostics.js",
+    "dist/src/firecrawl.js",
+    "dist/src/provider.js",
+    "dist/src/sidecar.js",
+    "dist/src/ssrf.js",
+    "dist/src/stealth.js",
+    "dist/src/streams.js",
+    "dist/src/tool.js",
+    "dist/src/types.js",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "docs/dependency-licenses.md",
+    "docs/deployment.md",
+    "docs/security.md",
+    "examples/.env.example",
+    "examples/openclaw.json",
+    "examples/sidecar.json",
+    "examples/stealth-fetch.service",
+    "sidecar/LICENSE",
+    "sidecar/README.md",
+    "sidecar/pyproject.toml",
+    "sidecar/requirements.lock",
+    "sidecar/stealth_fetch/__init__.py",
+    "sidecar/stealth_fetch/__main__.py",
+    "sidecar/stealth_fetch/app.py",
+    "sidecar/stealth_fetch/browsers.py",
+    "sidecar/stealth_fetch/cascade.py",
+    "sidecar/stealth_fetch/config.py",
+    "sidecar/stealth_fetch/detect.py",
+    "sidecar/stealth_fetch/diagnostics.py",
+    "sidecar/stealth_fetch/extract.py",
+    "sidecar/stealth_fetch/layers.py",
+    "sidecar/stealth_fetch/ssrf.py",
+    "sidecar/stealth_fetch/store.py",
+    "sidecar/stealth_fetch/transport.py"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run && npm run test:artifact",
+    "test:artifact": "node --test test/runtime-artifact.test.mjs",
+    "test:pack": "node scripts/verify-pack.mjs"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.10.5",
+      "minGatewayVersion": "2026.10.5"
+    },
+    "build": {
+      "openclawVersion": "2026.10.5",
+      "pluginSdkVersion": "2026.10.5"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "5.9.3",
+    "vitest": "5.0.5",
+    "openclaw": "2026.10.5"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.10.5"
+  },
+  "author": {
+    "name": "Arseniy Palagin",
+    "url": "https://github.com/aspalagin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aspalagin/openclaw-stealth-fetch.git"
+  },
+  "homepage": "https://github.com/aspalagin/openclaw-stealth-fetch#readme",
+  "bugs": {
+    "url": "https://github.com/aspalagin/openclaw-stealth-fetch/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

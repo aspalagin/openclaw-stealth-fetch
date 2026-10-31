@@ -1,0 +1,21 @@
+[Unit]
+Description=Local Stealth Fetch sidecar
+After=network.target
+
+[Service]
+Type=simple
+User=stealth-fetch
+Group=stealth-fetch
+WorkingDirectory=/opt/stealth-fetch
+Environment=STEALTH_FETCH_CONFIG=/etc/stealth-fetch/config.json
+EnvironmentFile=-/etc/stealth-fetch/service.env
+ExecStart=/opt/stealth-fetch/.venv/bin/python -m stealth_fetch
+StateDirectory=stealth-fetch
+StateDirectoryMode=0700
+UMask=0077
+Restart=on-failure
+RestartSec=5
+# Review distribution-specific hardening without disabling the browser sandbox.
+
+[Install]
+WantedBy=multi-user.target

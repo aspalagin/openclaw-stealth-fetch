@@ -1,0 +1,111 @@
+{
+  "id": "openclaw-stealth-fetch",
+  "name": "Stealth Fetch",
+  "description": "OpenClaw web_fetch provider and fetch_stealth tool with a local HTTP/browser cascade and optional external reader fallbacks.",
+  "version": "0.1.2",
+  "categories": [
+    "web"
+  ],
+  "contracts": {
+    "webFetchProviders": [
+      "stealth"
+    ],
+    "tools": [
+      "fetch_stealth"
+    ]
+  },
+  "activation": {
+    "onStartup": true
+  },
+  "configGroups": [
+    {
+      "id": "sidecar",
+      "title": "Сайдкар",
+      "order": 10,
+      "properties": [
+        "sidecar"
+      ]
+    },
+    {
+      "id": "cascade",
+      "title": "Каскад",
+      "order": 20,
+      "properties": [
+        "defaultEgress",
+        "firecrawlFallback"
+      ]
+    }
+  ],
+  "uiHints": {
+    "sidecar.baseUrl": {
+      "label": "Адрес сайдкара",
+      "help": "HTTP-адрес локального сервиса stealth-fetch. Принимаются только loopback-адреса (127.0.0.1, localhost, ::1).",
+      "placeholder": "http://127.0.0.1:18801"
+    },
+    "sidecar.timeoutSeconds": {
+      "label": "Таймаут каскада, с",
+      "help": "Сколько секунд сайдкар может тратить на один URL (весь каскад). По умолчанию 90, максимум 120."
+    },
+    "firecrawlFallback": {
+      "label": "Откат на Firecrawl (без ключа)",
+      "help": "Explicit opt-in: sends the full URL to the hosted Firecrawl API. Keyless access is best-effort; disabled by default."
+    },
+    "defaultEgress": {
+      "label": "Egress по умолчанию",
+      "help": "auto/direct use pinned direct HTTP. The historical ru route fails closed with proxy_route_unsupported."
+    },
+    "webFetch.apiKey": {
+      "label": "API-ключ (не используется)",
+      "help": "Провайдер keyless; поле существует только для совместимости с редактором credential в Control UI.",
+      "sensitive": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "sidecar": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "baseUrl": {
+            "type": "string",
+            "default": "http://127.0.0.1:18801"
+          },
+          "timeoutSeconds": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 120,
+            "default": 90
+          }
+        }
+      },
+      "firecrawlFallback": {
+        "type": "boolean",
+        "default": false
+      },
+      "defaultEgress": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "ru",
+          "direct"
+        ],
+        "default": "auto"
+      },
+      "webFetch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "apiKey": {
+            "type": [
+              "string",
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
