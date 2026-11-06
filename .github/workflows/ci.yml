@@ -1,10 +1,16 @@
 name: CI
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
   test:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        openclaw: ['2026.10.5', '2026.11.1']
+    env:
+      OPENCLAW_TEST_VERSION: ${{ matrix.openclaw }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -12,14 +18,20 @@ jobs:
           node-version: '26.12.1'
           cache: npm
       - run: npm ci --ignore-scripts --no-audit --no-fund
+      - if: matrix.openclaw != '2026.10.5'
+        run: npm install --no-save --package-lock=false --ignore-scripts --no-audit --no-fund openclaw@${{ matrix.openclaw }}
       - run: npm run build
       - run: npm run typecheck
       - run: npm test
       - run: npm run test:pack
       - uses: actions/setup-python@v5
+        if: matrix.openclaw == '2026.10.5'
         with:
           python-version: '3.12.3'
       - run: python -m venv .venv
+        if: matrix.openclaw == '2026.10.5'
       - run: .venv/bin/python -m pip install -r sidecar/requirements.lock
+        if: matrix.openclaw == '2026.10.5'
       - run: ../.venv/bin/python -m pytest -q
+        if: matrix.openclaw == '2026.10.5'
         working-directory: sidecar

@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const root = process.cwd();
+const peer = "openclaw@" + (process.env.OPENCLAW_TEST_VERSION || "2026.10.5");
 const work = process.env.PACK_TEST_DIR ? resolve(process.env.PACK_TEST_DIR) : mkdtempSync(join(tmpdir(), "stealth-pack-"));
 const destination = process.env.PACK_DESTINATION ? resolve(process.env.PACK_DESTINATION) : join(work, "artifacts");
 mkdirSync(work, { recursive: true });
@@ -27,8 +28,8 @@ const consumer = join(work, "consumer");
 assert.ok(!existsSync(consumer), "Use a fresh PACK_TEST_DIR for each clean-install check");
 mkdirSync(consumer);
 writeFileSync(join(consumer, "package.json"), JSON.stringify({ name: "stealth-pack-consumer", private: true, type: "module" }));
-npm(["install", "--ignore-scripts", "--no-audit", "--no-fund", "--registry=https://registry.npmjs.org", archive, "openclaw@2026.10.5"], consumer);
+npm(["install", "--ignore-scripts", "--no-audit", "--no-fund", "--registry=https://registry.npmjs.org", archive, peer], consumer);
 // Read a source-controlled harness, not files from a live OpenClaw installation.
 writeFileSync(join(consumer, "smoke.mjs"), readFileSync(join(root, "scripts/pack-smoke.mjs")));
 execFileSync(process.execPath, ["smoke.mjs"], { cwd: consumer, stdio: "inherit" });
-console.log(JSON.stringify({ archive, files: dry.files.length, cleanInstall: "passed", peer: "openclaw@2026.10.5" }));
+console.log(JSON.stringify({ archive, files: dry.files.length, cleanInstall: "passed", peer }));
