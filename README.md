@@ -6,7 +6,7 @@ This is not a universal CAPTCHA bypass or a search API replacement. Challenge pa
 
 ## Requirements and installation
 
-- OpenClaw 2026.10.5 or later; the public npm package 2026.10.5 is the tested peer.
+- OpenClaw 2026.10.5 or later; CI checks 2026.10.5, 2026.11.1 and 2026.11.3, including installation of the packed npm artifact.
 - Node 24.16+ on the 24 line, or 26.1+; development/CI use 26.12.1.
 - Python 3.12+ and Linux for the sidecar; the pinned lock is tested on Python 3.12.3.
 

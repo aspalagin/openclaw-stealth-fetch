@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        openclaw: ['2026.10.5', '2026.11.1']
+        openclaw: ['2026.10.5', '2026.11.1', '2026.11.3']
     env:
       OPENCLAW_TEST_VERSION: ${{ matrix.openclaw }}
     steps:
